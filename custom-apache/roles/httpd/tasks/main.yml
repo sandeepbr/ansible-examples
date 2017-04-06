@@ -1,0 +1,21 @@
+---
+- name: Installing apache server
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+   - unzip
+   - httpd
+   - git
+
+- name: copy index.html
+  copy:
+    src: index.html.raw
+    dest: /var/www/html/index.html
+    mode: 0644
+
+- name: Start apache service
+  service:
+    name: httpd
+    enabled: yes
+    state: started
